@@ -3,9 +3,12 @@ using UnityEngine.InputSystem;
 
 public class VehicleController : MonoBehaviour
 {
-    // Properties
+    // Vehicle Properties
     [SerializeField] private float impulse = 4f;
     [SerializeField] private float turnrate = 200f;
+    
+    // References
+    public CheckpointController target;
     
     // Private Fields
     private Vector2 _controlVector;
@@ -13,7 +16,12 @@ public class VehicleController : MonoBehaviour
 
     private void Start()
     {
+        // Get references
         _rigidbody = GetComponent<Rigidbody>();
+        
+        // Set target checkpoint color
+        target.leftPole.materials[0].color = CheckpointController.TargetedColor;
+        target.rightPole.materials[0].color = CheckpointController.TargetedColor;
     }
     
     private void Update()
