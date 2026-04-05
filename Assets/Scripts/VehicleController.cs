@@ -4,7 +4,8 @@ using UnityEngine.InputSystem;
 public class VehicleController : MonoBehaviour
 {
     // Properties
-    [SerializeField] private float accelerationForce = 4f;
+    [SerializeField] private float impulse = 4f;
+    [SerializeField] private float turnrate = 200f;
     
     // Private Fields
     private Vector2 _controlVector;
@@ -19,14 +20,14 @@ public class VehicleController : MonoBehaviour
     {
         // Apply acceleration and strafing forces
         Vector3 force = new(
-            _controlVector.y * accelerationForce,
+            _controlVector.y * impulse,
             0,
-            -_controlVector.x * accelerationForce
+            -_controlVector.x * impulse
         );
         _rigidbody.AddRelativeForce(force);
         
         // Apply rotation from mouse position
-        float dx = (Mouse.current.position.x.value - Screen.width / 2) / 200;
+        float dx = (Mouse.current.position.x.value - Screen.width / 2) / turnrate;
         if (Mathf.Abs(dx) > 0.01f)
         {
             transform.Rotate(0, dx, 0);
