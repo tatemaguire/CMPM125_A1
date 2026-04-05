@@ -3840,7 +3840,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf44d57047fb1454d974939c25477d3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  impulse: 6
+  accelerationImpulse: 4
+  turnaroundImpulse: 8
   turnrate: 600
   target: {fileID: 43406218}
 --- !u!114 &1995663668
