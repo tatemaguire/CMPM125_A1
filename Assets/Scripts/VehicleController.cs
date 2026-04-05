@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 public class VehicleController : MonoBehaviour
 {
@@ -18,6 +17,12 @@ public class VehicleController : MonoBehaviour
     {
         Vector3 force = new(_desiredAcceleration * accelerationForce, 0, 0);
         _rigidbody.AddRelativeForce(force);
+        
+        float dx = (Mouse.current.position.x.value - Screen.width / 2) / 200;
+        if (Mathf.Abs(dx) > 0.01f)
+        {
+            transform.Rotate(0, dx, 0);
+        }
     }
     
     // Event callback for player input
