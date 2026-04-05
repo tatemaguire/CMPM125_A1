@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,14 +7,16 @@ public class VehicleController : MonoBehaviour
     // Vehicle Properties
     [SerializeField] private float minAcceleration = 4f;
     [SerializeField] private float maxAcceleration = 8f;
-    [SerializeField] private float turnrate = 200f;
+    [SerializeField] private float turnrate = 600f;
     
     // References
     public CheckpointController target;
+    public TextMeshProUGUI timeLabel;
     
     // Private Fields
     private Vector2 _controlVector;
     private Rigidbody _rigidbody;
+    private float _startTime;
 
     private void Start()
     {
@@ -23,6 +26,9 @@ public class VehicleController : MonoBehaviour
         // Set target checkpoint color
         target.leftPole.materials[0].color = CheckpointController.TargetedColor;
         target.rightPole.materials[0].color = CheckpointController.TargetedColor;
+        
+        // Set Start Time
+        _startTime = Time.time;
     }
     
     private void Update()
@@ -44,6 +50,9 @@ public class VehicleController : MonoBehaviour
         {
             transform.Rotate(0, dx, 0);
         }
+        
+        // Update text label
+        timeLabel.text = $"Current time: {(Time.time - _startTime):F2} seconds";
     }
     
     // Event callback for player move input
