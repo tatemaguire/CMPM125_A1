@@ -8,12 +8,12 @@ public class CheckpointController : MonoBehaviour
     public MeshRenderer rightPole;
     
     // Private fields
-    private static Color _defaultColor;
+    public static Color DefaultColor;
     public static readonly Color TargetedColor = Color.red;
 
     private void Start()
     {
-        _defaultColor = leftPole.materials[0].color;
+        DefaultColor = leftPole.materials[0].color;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -28,8 +28,8 @@ public class CheckpointController : MonoBehaviour
             // Update colors
             next.leftPole.materials[0].color = TargetedColor;
             next.rightPole.materials[0].color = TargetedColor;
-            leftPole.materials[0].color = _defaultColor;
-            rightPole.materials[0].color = _defaultColor;
+            leftPole.materials[0].color = DefaultColor;
+            rightPole.materials[0].color = DefaultColor;
         }
     }
 }
