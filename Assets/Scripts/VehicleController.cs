@@ -3,9 +3,11 @@ using UnityEngine.InputSystem;
 
 public class VehicleController : MonoBehaviour
 {
-    [SerializeField] private float accelerationForce = 10f;
+    // Properties
+    [SerializeField] private float accelerationForce = 4f;
     
-    private float _desiredAcceleration;
+    // Private Fields
+    private Vector2 _controlVector;
     private Rigidbody _rigidbody;
 
     private void Start()
@@ -15,9 +17,15 @@ public class VehicleController : MonoBehaviour
     
     private void Update()
     {
-        Vector3 force = new(_desiredAcceleration * accelerationForce, 0, 0);
+        // Apply acceleration and strafing forces
+        Vector3 force = new(
+            _controlVector.y * accelerationForce,
+            0,
+            -_controlVector.x * accelerationForce
+        );
         _rigidbody.AddRelativeForce(force);
         
+        // Apply rotation from mouse position
         float dx = (Mouse.current.position.x.value - Screen.width / 2) / 200;
         if (Mathf.Abs(dx) > 0.01f)
         {
@@ -25,10 +33,10 @@ public class VehicleController : MonoBehaviour
         }
     }
     
-    // Event callback for player input
+    // Event callback for player move input
+    // Gets called on press and on release, so it keeps a consistent controlVector
     private void OnMove(InputValue action)
     {
-        var movement = action.Get<Vector2>();
-        _desiredAcceleration = movement.y;
+        _controlVector = action.Get<Vector2>();
     }
 }
