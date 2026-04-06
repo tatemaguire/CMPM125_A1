@@ -12,11 +12,13 @@ public class VehicleController : MonoBehaviour
     // References
     public CheckpointController target;
     public TextMeshProUGUI timeLabel;
+    public TextMeshProUGUI lapLabel;
     
     // Private Fields
     private Vector2 _controlVector;
     private Rigidbody _rigidbody;
     private float _startTime;
+    private int _currentLap = 0;
 
     private void Start()
     {
@@ -62,10 +64,23 @@ public class VehicleController : MonoBehaviour
         _controlVector = action.Get<Vector2>();
     }
 
+    // Gets the control vector in 3D space according to vehicle's rotation
+    // In the future, could be switched to camera's rotation
     private Vector3 GetSpatialControlVector()
     {
         Vector3 result = new(_controlVector.y, 0, -_controlVector.x);
         result = transform.rotation * result;
         return result;
+    }
+    
+    // Event callback for starting a lap
+    public void OnLapStart()
+    {
+        // Reset timer
+        _startTime = Time.time;
+        
+        // Increment lap counter and display
+        _currentLap++;
+        lapLabel.text = $"Lap #{_currentLap}";
     }
 }

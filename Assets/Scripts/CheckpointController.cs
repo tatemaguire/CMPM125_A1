@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class CheckpointController : MonoBehaviour
 {
+    // Properties
+    public bool lapStart;
+    
     // References
     public CheckpointController next;
     public MeshRenderer leftPole;
@@ -10,7 +13,7 @@ public class CheckpointController : MonoBehaviour
     // Private fields
     public static Color DefaultColor;
     public static readonly Color TargetedColor = Color.red;
-
+    
     private void Start()
     {
         DefaultColor = leftPole.materials[0].color;
@@ -30,6 +33,12 @@ public class CheckpointController : MonoBehaviour
             next.rightPole.materials[0].color = TargetedColor;
             leftPole.materials[0].color = DefaultColor;
             rightPole.materials[0].color = DefaultColor;
+            
+            // Check if lap finished
+            if (lapStart)
+            {
+                vehicle.OnLapStart();
+            }
         }
     }
 }
